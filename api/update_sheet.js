@@ -46,7 +46,7 @@ module.exports = (req,res) => {
             console.log(err);
             return;
         } else {
-            await gsrun(client,dataArray);
+            gsrun(client,dataArray);
             errorchecker += "Success";
         }
     });
