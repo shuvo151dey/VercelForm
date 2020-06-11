@@ -46,12 +46,11 @@ module.exports = (req,res) => {
             console.log(err);
             return;
         } else {
-            console.log('connected');
             gsrun(client,dataArray);
         }
     });
     
-    return res.redirect('http://' + q.host);
+    return res.send('data entered');
     
 };
 
