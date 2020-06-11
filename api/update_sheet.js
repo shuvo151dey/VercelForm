@@ -50,7 +50,7 @@ module.exports = (req,res) => {
         }
     });
     
-    return res.send('data entered');
+    return res.send(rest);
     
 };
 
