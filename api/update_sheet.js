@@ -1,15 +1,10 @@
 const {google} = require('googleapis');
 const keys = require('./keys.json');
-const express = require('express');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const serverless = require('serverless-http');
 
-const app = express();
 
-app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+const url = require('url');
+
+
 const client = new google.auth.JWT(
         keys.client_id,
         null,
@@ -39,10 +34,12 @@ async function gsrun(cl,array){
         
     }
 
-app.post('/form', (req,res) => {
+
+
+module.exports = (req,res) => {
     const { submit, ...rest} = req.body;
     var dataArray = [Object.values(rest)];
-    
+    const q = url.parse(req.url, true);
     
     client.authorize((err,tokens) => {
         if(err) {
@@ -54,8 +51,7 @@ app.post('/form', (req,res) => {
         }
     });
     
-    return res.redirect('/');
+    return res.redirect('http://' + q.host);
     
-});
-module.exports.handler = serverless(app);
+};
 
