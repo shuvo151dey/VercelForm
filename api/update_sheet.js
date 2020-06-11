@@ -11,7 +11,7 @@ const client = new google.auth.JWT(
         keys.private_key,
         ['https://www.googleapis.com/auth/spreadsheets']
     );
-function gsrun(cl,array){
+async function gsrun(cl,array){
         const gsapi = google.sheets({version:"v4", auth: cl});
     
         const opt = {
@@ -46,7 +46,7 @@ module.exports = (req,res) => {
             console.log(err);
             return;
         } else {
-            gsrun(client,dataArray);
+            await gsrun(client,dataArray);
             errorchecker += "Success";
         }
     });
