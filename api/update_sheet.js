@@ -3,7 +3,7 @@ const keys = require('./keys.json');
 
 
 const url = require('url');
-var errorchecker = "";
+var errorchecker = 0;
 
 const client = new google.auth.JWT(
         keys.client_id,
@@ -31,7 +31,7 @@ async function gsrun(cl,array){
                 }
               }
             );
-            errorchecker += "Success";
+            errorchecker += 1;
     }
 
 
@@ -47,11 +47,11 @@ module.exports = (req,res) => {
             return;
         } else {
             gsrun(client,dataArray);
-            errorchecker += "Success";
+            errorchecker += 1;
         }
     });
     
-    return res.send(errorchecker);
+    res.send(errorchecker);
     
 };
 
