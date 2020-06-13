@@ -52,7 +52,7 @@ async function gsrun(cl,array){
         }
     });
     
-    res.send(errorchecker);
+    res.status(200).send(errorchecker);
     
 };
 
