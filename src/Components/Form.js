@@ -3,7 +3,7 @@ import React from 'react';
 const Form = () => {
     return(
         <React.Fragment>
-            <form method="post" action="https://node-js-google-sheet-api.vercel.app/api/index">
+            <form method="post" action="/api/update_sheet">
                 <label htmlFor="name">Name</label>
                 <input type="text" name="name" />
                 <label htmlFor="phone" name="phone">Phone No</label> 
