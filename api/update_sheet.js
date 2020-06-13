@@ -1,58 +1,34 @@
+import { GoogleSpreadsheet } from 'google-spreadsheet';
+import creds from './keys.json';
 
-
-module.exports = (req,res) => {
-    const {google} = require('googleapis');
-const keys = require('./keys.json');
-
-
-const url = require('url');
-var errorchecker = 0;
-
-const client = new google.auth.JWT(
-        keys.client_id,
-        null,
-        keys.private_key,
-        ['https://www.googleapis.com/auth/spreadsheets']
-    );
-async function gsrun(cl,array){
-        const gsapi = google.sheets({version:"v4", auth: cl});
-    
-        const opt = {
-            spreadsheetId: '1DTMN85mKwVv41QQuluNWFh8-Qa_d5OejcHV3IDhzDQ4',
-            range: 'Sheet1!A2:Z100',
-            valueInputOption: 'USER_ENTERED',
-            resource: {values: array}
-        };
-    
-        gsapi.spreadsheets.values.append(opt,
-            (err, result) => {
-                if (err) {
-                  // Handle error
-                  console.log(err);
-                } else {
-                  console.log('%d cells updated.', result.updatedCells);
-                }
-              }
-            );
-            errorchecker += 1;
-    }
-
-
+export default async (req, res) => {
     const { submit, ...rest} = req.body;
-    var dataArray = [Object.values(rest)];
-    const q = url.parse(req.url, true);
-    
-    client.authorize((err,tokens) => {
-        if(err) {
-            console.log(err);
-            return;
-        } else {
-            gsrun(client,dataArray);
-            errorchecker += 1;
-        }
-    });
-    
-    res.status(200).send(errorchecker.toString());
-    
+   try {
+      var { name, phone, address, choice } = JSON.parse(rest);
+   } catch (error) {
+      console.error('Bad API call at sheetAction:', error);
+   }
+   const doc = new GoogleSpreadsheet('1DTMN85mKwVv41QQuluNWFh8-Qa_d5OejcHV3IDhzDQ4');
+   await doc.useServiceAccountAuth(creds);
+   await doc.loadInfo();
+   // console.log(doc.title);
+   const sheet = doc.sheetsByIndex[0]; // or use doc.sheetsById[id]
+   // console.log(sheet.title);
+   // console.log(email);
+   var indiaTime = new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" });
+   // indiatime = indiatime.setHours(indiatime.get time.getTimezoneOffset
+   // console.log(indiaTime);
+   try {
+      await sheet.addRow({
+         Timestamp: (new Date()).toString(),
+         IST: indiaTime,
+         Name: name,
+         Address: address,
+         "Phone number": phone,
+         Choice: choice
+      });
+   } catch (error) {
+      console.error(error);
+   }
+   res.end();
 };
-
