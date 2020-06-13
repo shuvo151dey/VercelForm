@@ -8,7 +8,7 @@ export default async (req, res) => {
    } catch (error) {
       console.error('Bad API call at sheetAction:', error);
    }
-   const doc = new GoogleSpreadsheet('1DTMN85mKwVv41QQuluNWFh8-Qa_d5OejcHV3IDhzDQ4');
+   const doc = new GoogleSpreadsheet('1N5we6FgDAeKVvYTHAcXPXujxh7-R-39gQAkc7GeoXaQ');
    await doc.useServiceAccountAuth(creds);
    await doc.loadInfo();
    // console.log(doc.title);
