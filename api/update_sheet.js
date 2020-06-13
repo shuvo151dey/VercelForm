@@ -1,4 +1,7 @@
-const {google} = require('googleapis');
+
+
+module.exports = (req,res) => {
+    const {google} = require('googleapis');
 const keys = require('./keys.json');
 
 
@@ -35,8 +38,6 @@ async function gsrun(cl,array){
     }
 
 
-
-module.exports = (req,res) => {
     const { submit, ...rest} = req.body;
     var dataArray = [Object.values(rest)];
     const q = url.parse(req.url, true);
