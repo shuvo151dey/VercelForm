@@ -7,7 +7,7 @@ import creds from '../keys.json';
 export default async (req, res) => {
     const { submit, ...rest} = req.body;
    try {
-      var { name, phone, address, choice } = JSON.parse(rest);
+      var { name, phone, address } = JSON.parse(rest);
    } catch (error) {
       console.error('Bad API call at sheetAction:', error);
    }
@@ -27,8 +27,7 @@ export default async (req, res) => {
          IST: indiaTime,
          Name: name,
          Address: address,
-         "Phone number": phone,
-         Choice: choice
+         "Phone number": phone
       });
    } catch (error) {
       console.error(error);
