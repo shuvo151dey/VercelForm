@@ -5,7 +5,7 @@ const Form = () => {
     const phoneInputRef = useRef();
     const addressInputRef = useRef();
     const submitHandler = (event) => {
-        event.preventDefault;
+        event.preventDefault();
         const nameInput = nameInputRef.current.value;
         const phoneInput = phoneInputRef.current.value;
         const addressInput = addressInputRef.current.value;
