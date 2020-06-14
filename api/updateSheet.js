@@ -1,10 +1,10 @@
 
 //'1DTMN85mKwVv41QQuluNWFh8-Qa_d5OejcHV3IDhzDQ4'
 //1DTMN85mKwVv41QQuluNWFh8-Qa_d5OejcHV3IDhzDQ4
-import { GoogleSpreadsheet } from 'google-spreadsheet';
-import creds from '../keys.json';
-
-export default async (req, res) => {
+const { GoogleSpreadsheet } = require('google-spreadsheet');
+const creds = require('../keys.json');
+console.log(creds);
+module.exports = async (req, res) => {
     
    try {
       var { name, phone, address } = JSON.parse(req.body);
@@ -27,7 +27,8 @@ export default async (req, res) => {
          IST: indiaTime,
          Name: name,
          Address: address,
-         Phone: phone
+         "Phone number": phone,
+         Choice: choice
       });
    } catch (error) {
       console.error(error);
