@@ -27,8 +27,7 @@ export default async (req, res) => {
          IST: indiaTime,
          Name: name,
          Address: address,
-         "Phone number": phone,
-         Choice: choice
+         Phone: phone
       });
    } catch (error) {
       console.error(error);
