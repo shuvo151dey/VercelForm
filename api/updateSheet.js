@@ -2,7 +2,7 @@
 //'1DTMN85mKwVv41QQuluNWFh8-Qa_d5OejcHV3IDhzDQ4'
 //1DTMN85mKwVv41QQuluNWFh8-Qa_d5OejcHV3IDhzDQ4
 import { GoogleSpreadsheet } from 'google-spreadsheet';
-import creds from './keys.json';
+import creds from '../keys.json';
 
 export default async (req, res) => {
     const { submit, ...rest} = req.body;
