@@ -4,11 +4,12 @@ const Form = () => {
     const nameInputRef = useRef();
     const phoneInputRef = useRef();
     const addressInputRef = useRef();
-    const submitHandler = (event) => {
+    const submitHandler = async (event) => {
+        event.preventDefault();
         const nameInput = nameInputRef.current.value;
         const phoneInput = phoneInputRef.current.value;
         const addressInput = addressInputRef.current.value;
-        fetch('/api/updateSheet',{
+        await fetch('/api/updateSheet/',{
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -23,7 +24,6 @@ const Form = () => {
         nameInputRef.current.value = '';
         phoneInputRef.current.value = '';
         addressInputRef.current.value = '';
-        event.preventDefault();
     };
     return(
         <React.Fragment>
