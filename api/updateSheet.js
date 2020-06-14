@@ -1,38 +1,47 @@
 
 //'1DTMN85mKwVv41QQuluNWFh8-Qa_d5OejcHV3IDhzDQ4'
 //1DTMN85mKwVv41QQuluNWFh8-Qa_d5OejcHV3IDhzDQ4
-const { GoogleSpreadsheet } = require('google-spreadsheet');
+const {google} = require('googleapis');
 const creds = require('../keys.json');
 console.log(creds);
 module.exports = async (req, res) => {
     
-   try {
-      var { name, phone, address } = JSON.parse(req.body);
-   } catch (error) {
-      console.error('Bad API call at sheetAction:', error);
-   }
-   const doc = new GoogleSpreadsheet('1DTMN85mKwVv41QQuluNWFh8-Qa_d5OejcHV3IDhzDQ4');
-   await doc.useServiceAccountAuth(creds);
-   await doc.loadInfo();
-   // console.log(doc.title);
-   const sheet = doc.sheetsByIndex[0]; // or use doc.sheetsById[id]
-   // console.log(sheet.title);
-   // console.log(email);
-   var indiaTime = new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" });
-   // indiatime = indiatime.setHours(indiatime.get time.getTimezoneOffset
-   // console.log(indiaTime);
-   try {
-      await sheet.addRow({
-         Timestamp: (new Date()).toString(),
-         IST: indiaTime,
-         Name: name,
-         Address: address,
-         "Phone number": phone,
-         Choice: choice
-      });
-   } catch (error) {
-      console.error(error);
-   }
+   const client = new google.auth.JWT(
+      keys.client_id,
+      null,
+      keys.private_key,
+      ['https://www.googleapis.com/auth/spreadsheets']
+  );
+async function gsrun(cl,array){
+      const gsapi = await google.sheets({version:"v4", auth: cl});
+  
+      const opt = {
+          spreadsheetId: '1DTMN85mKwVv41QQuluNWFh8-Qa_d5OejcHV3IDhzDQ4',
+          range: 'Sheet1!A2:Z100',
+          valueInputOption: 'USER_ENTERED',
+          resource: {values: array}
+      };
+  
+      await gsapi.spreadsheets.values.append(opt,
+          (err, result) => {
+              if (err) {
+                // Handle error
+                console.log(err);
+              } 
+            }
+          );
+      
+  }
+
+  client.authorize((err,tokens) => {
+      if(err) {
+          console.log(err);
+          return;
+      } else {
+          console.log('connected');
+          gsrun(client,[JSON.parse(req.body),]);
+      }
+  });
    res.end();
 };
 
