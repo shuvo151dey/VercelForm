@@ -5,9 +5,9 @@ import { GoogleSpreadsheet } from 'google-spreadsheet';
 import creds from '../keys.json';
 
 export default async (req, res) => {
-    const { submit, ...rest} = req.body;
+    
    try {
-      var { name, phone, address } = JSON.parse(rest);
+      var { name, phone, address } = JSON.parse(req.body);
    } catch (error) {
       console.error('Bad API call at sheetAction:', error);
    }
@@ -27,7 +27,8 @@ export default async (req, res) => {
          IST: indiaTime,
          Name: name,
          Address: address,
-         "Phone number": phone
+         "Phone number": phone,
+         Choice: choice
       });
    } catch (error) {
       console.error(error);
