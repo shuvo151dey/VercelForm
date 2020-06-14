@@ -11,10 +11,6 @@ const Form = () => {
         const addressInput = addressInputRef.current.value;
         await fetch('/api/updateSheet/',{
             method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
             body: JSON.stringify({
                 name: nameInput,
                 phone: phoneInput,
